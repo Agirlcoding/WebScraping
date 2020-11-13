@@ -11,7 +11,7 @@ import numpy as np
 def createList(r1, r2): 
     return list(range(r1, r2+1))
     
-#Choose the timeframe I'm interested in to get the Top40 Charts
+#Choose the interesting timeframe to get the Top40 Charts
 datum=[]
 numbers=np.arange(-6382, -900, 7)
 numbers_clean=numbers.tolist()
@@ -27,8 +27,10 @@ artists_clean=[]
 title_clean=[]
 
 for url in musicWebsite:
+    #Get the SourceCode of the Page
     src = requests.get(url).text
     soup = BeautifulSoup(src, 'html.parser')
+    #By Looking at Soup we can see that all the information we need are in the div Tag with class artist and title
     artists=[]
     for row in soup.findAll('div',attrs={"class" : "artist"}):
         artists.append(row.text)
@@ -39,7 +41,8 @@ for url in musicWebsite:
         title.append(row.text)
     for i in title:
         title_clean.append((i.rstrip('\n'))[1:])
-        
+
+#The Iteration list has to be as long as the datum List        
 iteration=createList(0,783)
     
 dateRelease=[]
